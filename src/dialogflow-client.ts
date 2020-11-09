@@ -13,7 +13,7 @@ export class DialogflowClient {
   private readonly languageCode: string;
 
   constructor(config: DialogflowConfig) {
-    console.log("DF", config);
+    console.log('DialogFlow Client config: ', config);
     this.sessionClient = new dialogflow.SessionsClient();
     this.contextsClient = new dialogflow.ContextsClient();
     this.projectId = config.projectId;
@@ -54,8 +54,8 @@ export class DialogflowClient {
   public async listContext(sessionId:string){
     const sessionPath = this.contextsClient.sessionPath(this.projectId, sessionId);
     const request = {
-      parent: sessionPath
-    }
+      parent: sessionPath,
+    };
     return this.contextsClient
       .listContexts(request)
       .then(responses => {
@@ -68,11 +68,11 @@ export class DialogflowClient {
 
   public async createContext(sessionId:string, AcontextFromFirebase){
     const sessionPath = this.contextsClient.sessionPath(this.projectId, sessionId);
-    console.log("AcontextFromFirebase", AcontextFromFirebase);
+    console.log('AcontextFromFirebase', AcontextFromFirebase);
     const request = {
       parent: sessionPath,
-      context: AcontextFromFirebase
-    }
+      context: AcontextFromFirebase,
+    };
 
     return this.contextsClient
       .createContext(request)
@@ -83,7 +83,7 @@ export class DialogflowClient {
         console.error('Failed to create contexts:', err);
       });
   }
-  
+
 
   private dialogflowMessagesToLineMessages(dialogflowMessages) {
     const lineMessages: Message[] = [];
